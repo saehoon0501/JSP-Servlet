@@ -96,11 +96,11 @@ public class StudentControllerServlet extends HttpServlet {
 	private void listStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		List<Student> result;
 		try {
-		result = studentDbUtil.getStudents();
-		request.setAttribute("STUDENT_LIST",result);
+			result = studentDbUtil.getStudents();
+			request.setAttribute("STUDENT_LIST",result);
 				
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
-		dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+			dispatcher.forward(request, response);
 		}catch(Exception ex) {
 			throw new ServletException(ex);
 		}
@@ -110,6 +110,7 @@ public class StudentControllerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Student newStudent = new Student(req.getParameter("firstName").toString(),req.getParameter("lastName").toString(),req.getParameter("email").toString());		
+		
 		try {
 			this.studentDbUtil.addStudent(newStudent);
 			listStudents(req,resp);		
@@ -121,8 +122,7 @@ public class StudentControllerServlet extends HttpServlet {
 
 	private void updateStudent(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 		Student newStudent = new Student(Integer.parseInt(req.getParameter("studentId")),req.getParameter("firstName").toString(),req.getParameter("lastName").toString(),req.getParameter("email").toString());
-		log(newStudent.toString());
-		log(req.getParameter("studentId"));
+		
 		try {
 			this.studentDbUtil.updateStudent(newStudent);
 			listStudents(req,resp);
