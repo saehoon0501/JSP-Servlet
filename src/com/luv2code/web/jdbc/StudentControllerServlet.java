@@ -58,9 +58,23 @@ public class StudentControllerServlet extends HttpServlet {
 				loadStudents(request,response);
 			case "UPDATE":
 				updateStudent(request,response);
+			case "DELETE":
+				deleteStudent(request,response);
 			default:
 				listStudents(request, response);	
 		}						
+	}
+
+
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+		int studentId = Integer.parseInt(request.getParameter("studentId"));
+		
+		try {
+			this.studentDbUtil.deleteStudent(studentId);
+			listStudents(request,response);
+		}catch(Exception ex) {
+			throw new ServletException(ex);
+		}
 	}
 
 
@@ -91,14 +105,6 @@ public class StudentControllerServlet extends HttpServlet {
 			throw new ServletException(ex);
 		}
 	}
-
-
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
-	}
-
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
